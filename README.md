@@ -1,29 +1,29 @@
 # Web-server-log-analysis
-Курс: Python QA Engineer - 2022 (OTUS).\
-ДЗ 10: Анализ лога веб-сервера.
+Course: Python QA Engineer - 2022 (OTUS).\
+Homework 10: Web server log analysis.
 
-Скрипт парсит и собирает метрики по логам с именем *.log.\
-Результат анализа выводится в консоль и в файл report.json.
+The script parses and collects metrics from logs named *.log.\
+The result of the analysis is output to the console and to the report.json file.
 
-Для запуска необходимо выполнить команду:\
+To start, you need to run the command:\
 python log_parser.py --file={*.log} or --folder={folder_name}
 
-В параметре file указывается название файла.\
-В параметре folder указывается директория с файлами логов.
+The file parameter specifies the name of the file.\
+The folder parameter specifies the directory with the log files.
 
-Пояснения к параметрам:
-- параметры --file и --folder являются взаимоисключающими
-- обязательно указать один из параметров
-- если указать --file без значения - подставится значение access.log
-- если указать --folder без значения - подставится значение ./
+Parameter explanations:
+- --file and --folder options are mutually exclusive
+- be sure to specify one of the parameters
+- if you specify --file without a value, the access.log value will be substituted
+- if you specify --folder without a value, the value ./ will be substituted
 
-Формат записи в файле лога:\
+Log file format:\
 %h %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i" %D\
-%h - имя удаленного хоста\
-%t - время получения запроса\
-%r - тип запроса, его содержимое и версия\
-%s - код состояния HTTP\
-%b - количество отданных сервером байт\
-%{Referer} - URL-источник запроса\
-%{User-Agent} - HTTP-заголовок, содержащий информацию о запросе\
-%D - длительность запроса в миллисекундах
+%h - remote host name\
+%t - request receipt time\
+%r - request type, content and version\
+%s - HTTP status code\
+%b - number of bytes returned by the server\
+%{Referer} - request source URL\
+%{User-Agent} - HTTP header containing information about the request\
+%D - request duration in milliseconds
