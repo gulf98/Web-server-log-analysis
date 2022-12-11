@@ -32,14 +32,14 @@ def get_file_paths(_parser):
     _folder = _namespace.folder
     if _file:
         if not re.search(".log$", _file):
-            raise ValueError("Файл должен быть с расширением log")
+            raise ValueError("The file must have a log extension")
         _file_paths = [Path(_file)]
     elif _folder:
         _file_paths = list(Path(_folder).glob("*.log"))
         if not _file_paths:
-            raise ValueError("В папке не найдено ни одного файла с расширением log")
+            raise ValueError("No log file found in folder")
     else:
-        raise ValueError("Необходимо указать директорию или файл")
+        raise ValueError("You must specify a directory or file")
     return _file_paths
 
 
@@ -51,7 +51,7 @@ def get_line_generator(_paths):
                     if _line:
                         yield _line
         except Exception as e:
-            print("Ошибка при чтении файла", e)
+            print("Error while reading file", e)
 
 
 def parse_line(_line):
@@ -59,7 +59,7 @@ def parse_line(_line):
     if _parsed_line:
         return _parsed_line.groupdict()
     else:
-        print("Не найдено совпадений для строки: ", _line)
+        print("No match found for string: ", _line)
 
 
 def parsing_and_collecting_metrics(_line_generator):
@@ -97,14 +97,14 @@ def parsing_and_collecting_metrics(_line_generator):
 
 def generate_report(_metrics):
     _report = list()
-    _report.append(f"Общее количество выполненных запросов: {_metrics['request_count']}")
-    _report.append(f"Количество запросов по HTTP-методам:")
+    _report.append(f"Total number of completed requests: {_metrics['request_count']}")
+    _report.append(f"Number of requests by HTTP methods:")
     for key, value in _metrics["method_metrics"].items():
         _report.append(f"\t{key} - {value}")
-    _report.append("Топ 3 IP адресов, с которых были сделаны запросы:")
+    _report.append("Top 3 IP addresses from which requests were made:")
     for key, value in _metrics["ip_metrics"].items():
         _report.append(f"\t{key} - {value}")
-    _report.append("Топ 3 самых долгих запросов:")
+    _report.append("Top 3 longest requests:")
     for item in _metrics["request_metrics"]:
         _report.append(f"\t{item['method']} {item['url']} {item['ip']} {item['duration']}ms {item['time']}")
     return _report
